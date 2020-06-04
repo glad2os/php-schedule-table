@@ -1,15 +1,18 @@
 <?php
 
-class Index extends Controller
+namespace Controller;
+
+use Helper\View;
+
+class index extends Base
 {
     public function __construct()
     {
-        parent::__construct("Model" . __CLASS__);
+        parent::__construct(\Model\Index::class);
     }
 
     function action_index($get = null)
     {
-        $this->model->get_data();
-        new View('index.html');
+        View::viewPage('index.html');
     }
 }

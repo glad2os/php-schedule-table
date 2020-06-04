@@ -1,5 +1,6 @@
 <?php
 
+namespace Helper;
 
 class View
 {
@@ -7,10 +8,9 @@ class View
     /**
      * View constructor.
      */
-    public function __construct($content_view, $data = null)
+    public static function viewPage($content_view, $data = null)
     {
-        if(is_array($data)) {
-            // преобразуем элементы массива в переменные
+        if (is_array($data)) {
             extract($data);
         }
 

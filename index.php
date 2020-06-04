@@ -1,40 +1,42 @@
 <?php
 
-include_once __DIR__ . "/core/Controller.php";
+use Controller\PageNotFound;
+
+include_once __DIR__ . "/controllers/Base.php";
+include_once __DIR__ . "/models/Base.php";
 include_once __DIR__ . "/core/View.php";
-include_once __DIR__ . "/core/Model.php";
 
-error_reporting(E_ALL & ~E_NOTICE);
+include_once __DIR__ . "/core/sql.php";
+include_once __DIR__ . "/core/exceptions/DbConnectionException.php";
 
-$explode = explode('/', $_SERVER['REDIRECT_URL']);
+include_once __DIR__ . "/models/Auth.php";
+include_once __DIR__ . "/models/Index.php";
 
-if (!is_null($explode[1])) $controller = strtolower($explode[1]);
-if (!is_null($explode[2]) && !empty($explode[2]))
-    $action = strtolower("action_" . $explode[2]);
-else
-    $action = "action_index";
+include_once __DIR__ . "/controllers/index.php";
+include_once __DIR__ . "/controllers/PageNotFound.php";
+include_once __DIR__ . "/controllers/auth.php";
 
-if (count($explode) < 2) {
-    include_once __DIR__ . "/controllers/Index.php";
-    $controller = "Index";
-}
+$routes = explode('/', $_SERVER['SCRIPT_URL']);
+$routes = array_filter($routes);
+$routes = array_values($routes);
+
+$controller = "\\Controller\\";
+$controller .= empty($routes[0]) ? "index" : $routes[0];
+$action = empty($routes[1]) ? "action_index" : "action_" . $routes[1];
 
 // Если требуется обычный GET не из Web 2.0
-if (count($explode) >= 3) {
-    $params = array_slice($explode, 3, count($explode));
-} // else {
-//    $params = $_GET;
-//}
-
-if (!file_exists(__DIR__ . "/controllers/" . $controller . ".php") && $controller !== "index") {
-    include_once __DIR__ . "/controllers/PageNotFound.php";
-    $controller = "PageNotFound";
+if (count($routes) >= 3) {
+    $params = array_slice($routes, 3, count($routes));
 } else {
-    include_once __DIR__ . "/controllers/" . $controller . ".php";
+    $params = $_GET;
 }
 
-$Controller = new $controller();
+try {
+    $controller = new $controller();
+} catch (Throwable $exception) {
+    $controller = new PageNotFound();
+}
 
-if (!method_exists($Controller, $action)) $Controller->method_not_found();
+if (!method_exists($controller, $action)) $controller->method_not_found();
 
-$Controller->$action($params);
+$controller->$action($params);
