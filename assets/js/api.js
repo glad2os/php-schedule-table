@@ -1,4 +1,4 @@
-function request(target, body, callback = {}, fallbackCallback = e => alert(e.message)) {
+function request(target, body, callback = {}, fallbackCallback = e => alert(e.issueMessage)) {
     const request = new XMLHttpRequest();
     request.open("POST", `/${target}`, true);
     request.setRequestHeader('Content-Type', 'application/json; charset=UTF-8');
@@ -13,10 +13,19 @@ function request(target, body, callback = {}, fallbackCallback = e => alert(e.me
     request.send(JSON.stringify(body));
 }
 
+function log(form) {
+    request('auth/auth', {
+        "login": form.login.value,
+        "password": form.password.value
+    }, (response) => {
+        console.log(response);
+    });
+}
+
 function reg(form) {
-    request('auth/login', {
-        "login": form.login,
-        "password" : form.password
+    request('auth/register', {
+        "login": form.login.value,
+        "password": form.password.value
     }, (response) => {
         console.log(response);
     });
