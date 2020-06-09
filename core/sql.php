@@ -208,4 +208,38 @@ class sql extends \MySQLi
         if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
         $stmt->close();
     }
+
+    public function getAllMembers($page)
+    {
+        $offset = $page * 10;
+        $limit = 10;
+        $stmt = $this->prepare("SELECT * FROM members ORDER BY id DESC LIMIT ?, ?");
+        $stmt->bind_param("ii", $offset, $limit);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function getCountOfMembers()
+    {
+        $stmt = $this->prepare("select count(id) from members");
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_array(MYSQLI_NUM)[0];
+        $stmt->close();
+        return $result;
+    }
+
+    public function addMember($name, $surname, $date_of_birth, $club, $place_of_living, $weight, $sex)
+    {
+        $stmt = $this->prepare("insert into members (name, surname, date_of_birth, club, place_of_living, weight, sex) value (?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("sssssss", $name, $surname, $date_of_birth, $club, $place_of_living, $weight, $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->insert_id;
+        $stmt->close();
+        return $result;
+    }
 }

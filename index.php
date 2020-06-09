@@ -12,6 +12,8 @@ use Controller\PageNotFound;
 include_once __DIR__ . "/controllers/Base.php";
 include_once __DIR__ . "/models/Base.php";
 include_once __DIR__ . "/core/View.php";
+include_once __DIR__ . "/core/permissions.php";
+include_once __DIR__ . "/core/RequestedPermissions.php";
 
 /*
  * SQL и классы ошибок
@@ -27,6 +29,7 @@ include_once __DIR__ . "/core/exceptions/InvalidCredentialsException.php";
  */
 include_once __DIR__ . "/models/Auth.php";
 include_once __DIR__ . "/models/Index.php";
+include_once __DIR__ . "/models/ControlPanel.php";
 
 /*
  * Все контроллеры
