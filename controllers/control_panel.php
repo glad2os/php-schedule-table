@@ -69,4 +69,52 @@ class control_panel extends Base
             ]);
         }
     }
+
+    function action_changemember()
+    {
+        header('Content-Type: application/json');
+        $request = json_decode(file_get_contents("php://input"), true);
+
+        try {
+            $this->model->changeUser($request['usedata']);
+        } catch (ForbiddenException $exception) {
+            http_response_code(403);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        } catch (\Throwable $exception) {
+            http_response_code(400);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        }
+    }
+
+    function action_delete($params)
+    {
+        header('Content-Type: application/json');
+
+        if (empty($params)) die;
+
+        try {
+            if ($params[0] == "member") {
+                $this->model->deleteMember($params[1]);
+                http_response_code(200);
+            }
+        } catch (ForbiddenException $exception) {
+            http_response_code(403);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        } catch (\Throwable $exception) {
+            http_response_code(400);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        }
+    }
 }

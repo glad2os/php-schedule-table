@@ -20,7 +20,6 @@ class ControlPanel extends Base
 
     function checkuser()
     {
-        //TODO: проверить, что выдаст если нет $_COOKIE['id']
         RequestedPermissions::Permission(PERMISSION_USER);
 
         if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
@@ -39,5 +38,32 @@ class ControlPanel extends Base
             $request['weight'],
             $request['sex']
         );
+    }
+
+    function changeUser($request)
+    {
+        RequestedPermissions::Permission(PERMISSION_ADMIN);
+
+        if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
+
+        $this->mysqli->changeUser(
+            $request['id'],
+            $request['name'],
+            $request['surname'],
+            $request['date_of_birth'],
+            $request['club'],
+            $request['place_of_living'],
+            $request['weight'],
+            $request['sex']
+        );
+    }
+
+    function deleteMember($id)
+    {
+        RequestedPermissions::Permission(PERMISSION_ADMIN);
+
+        if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
+
+        $this->mysqli->deleteMember($id);
     }
 }

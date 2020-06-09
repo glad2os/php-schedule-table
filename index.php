@@ -54,7 +54,7 @@ $action = empty($routes[1]) ? "action_index" : "action_" . $routes[1];
 
 // Если требуется обычный GET не из идиотского Web 2.0
 if (count($routes) >= 3) {
-    $params = array_slice($routes, 3, count($routes));
+    $params = array_slice($routes, 2, count($routes));
 } else {
     $params = $_GET;
 }

@@ -242,4 +242,24 @@ class sql extends \MySQLi
         $stmt->close();
         return $result;
     }
+
+    public function changeUser($id, $name, $surname, $date_of_birth, $club, $place_of_living, $weight, $sex)
+    {
+        $stmt = $this->prepare("update members set name = ?, surname = ?, date_of_birth = ?, club = ?,  place_of_living = ?,  weight= ?, sex = ?  where id = ?");
+        $stmt->bind_param("ssssssss", $name, $surname, $date_of_birth, $club, $place_of_living, $weight, $sex, $id);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->insert_id;
+        $stmt->close();
+        return $result;
+    }
+
+    public function deleteMember($id)
+    {
+        $stmt = $this->prepare("delete from members where id = ?");
+        $stmt->bind_param("i", $id);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $stmt->close();
+    }
 }
