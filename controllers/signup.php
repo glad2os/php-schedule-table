@@ -9,6 +9,8 @@ class signup extends Base
 {
     function action_index()
     {
-        View::viewPage('signup.html');
+        View::viewPage('signup.html',
+            ['title' => "Регистрация"]
+        );
     }
 }

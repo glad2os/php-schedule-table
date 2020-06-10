@@ -3,6 +3,7 @@
 namespace Controller;
 
 use Exception\ForbiddenException;
+use Helper\RequestedPermissions;
 use Helper\View;
 
 class control_panel extends Base
@@ -18,7 +19,22 @@ class control_panel extends Base
 
     function action_index()
     {
-        View::viewPage('control_panel.html');
+        try {
+            $this->model->checkGuest();
+
+            View::viewPage('control_panel.html', [
+                'title' => "Контрольная панель"
+            ]);
+        } catch (ForbiddenException $exception) {
+            $this->forbidden($exception->getMessage());
+        } catch (\Throwable $exception) {
+            http_response_code(400);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        }
+
     }
 
     function action_getmembers()
@@ -50,7 +66,7 @@ class control_panel extends Base
     {
         header('Content-Type: application/json');
         try {
-            $this->model->checkuser();
+            $this->model->checkUser();
 
             $request = json_decode(file_get_contents("php://input"), true);
 

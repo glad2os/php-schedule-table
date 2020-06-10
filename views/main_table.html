@@ -1,0 +1,25 @@
+<div class="container" style="margin-top: 25px;">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Имя</th>
+            <th scope="col">Фамилия</th>
+            <th scope="col">Дата рождения</th>
+            <th scope="col">Вес</th>
+            <th scope="col">Спортивный клуб</th>
+            <th scope="col">Город индекс</th>
+            <th scope="col">Пол</th>
+        </tr>
+        </thead>
+        <tbody id="table"></tbody>
+    </table>
+
+    <div class="ui">
+        <input class="ui button" type="button" value="<-" onclick="prev()">
+        <label class="ui label">Страница <label id="page"></label> из <label id="page_count"></label></label>
+        <input class="ui button" type="button" value="->" onclick="next()">
+    </div>
+</div>
+
+<script src="/assets/js/main_table.js"></script>

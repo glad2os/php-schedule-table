@@ -16,7 +16,6 @@ class auth extends Base
 
     function action_index($get = null)
     {
-        View::viewPage("ExamplePage.html");
     }
 
     function action_register()

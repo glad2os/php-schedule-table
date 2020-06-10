@@ -22,8 +22,10 @@ abstract class Base
         View::viewPage('error_405.html');
     }
 
-    public function forbidden()
+    public function forbidden($message = null)
     {
-        View::viewPage('error_403.html');
+        View::viewPage('403.html', [
+            'exception' => $message
+        ]);
     }
 }

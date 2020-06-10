@@ -30,6 +30,8 @@ include_once __DIR__ . "/core/exceptions/InvalidCredentialsException.php";
 include_once __DIR__ . "/models/Auth.php";
 include_once __DIR__ . "/models/Index.php";
 include_once __DIR__ . "/models/ControlPanel.php";
+include_once __DIR__ . "/models/AllTable.php";
+include_once __DIR__ . "/models/MainTable.php";
 
 /*
  * Все контроллеры

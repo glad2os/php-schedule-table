@@ -22,7 +22,9 @@ class logout extends Base
             $this->model->logout();
             http_response_code(200);
 
-            View::viewPage('index.html');
+            View::viewPage('index.html',[
+                'title'=>"Главная страница"
+            ]);
         }
     }
 }

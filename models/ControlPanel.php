@@ -18,9 +18,18 @@ class ControlPanel extends Base
         return $this->mysqli->getCountOfMembers();
     }
 
-    function checkuser()
+    function checkUser()
     {
         RequestedPermissions::Permission(PERMISSION_USER);
+
+        if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
+
+        return true;
+    }
+
+    function checkGuest()
+    {
+        RequestedPermissions::Permission(PERMISSION_GUEST);
 
         if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
 
