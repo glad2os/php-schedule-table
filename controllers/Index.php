@@ -6,13 +6,10 @@ use Helper\View;
 
 class index extends Base
 {
-    public function __construct()
+    function action_index()
     {
-        parent::__construct(\Model\Index::class);
-    }
-
-    function action_index($get = null)
-    {
-        View::viewPage('index.html');
+        View::viewPage('index.html',[
+            'title'=>"Главная страница"
+        ]);
     }
 }

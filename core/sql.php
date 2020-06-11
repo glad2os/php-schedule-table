@@ -262,4 +262,70 @@ class sql extends \MySQLi
         if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
         $stmt->close();
     }
+
+    public function get8cat($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? AND date_of_birth BETWEEN CURDATE() - INTERVAL 8 YEAR + INTERVAL 1 DAY AND CURDATE()-INTERVAL 7 YEAR ORDER BY date_of_birth");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function get9cat($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? AND date_of_birth BETWEEN CURDATE() - INTERVAL 9 YEAR + INTERVAL 1 DAY AND CURDATE()-INTERVAL 8 YEAR ORDER BY date_of_birth");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function get10cat($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? AND date_of_birth BETWEEN CURDATE() - INTERVAL 10 YEAR + INTERVAL 1 DAY AND CURDATE()-INTERVAL 9 YEAR ORDER BY date_of_birth");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function get11cat($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? AND date_of_birth BETWEEN CURDATE() - INTERVAL 11 YEAR + INTERVAL 1 DAY AND CURDATE()-INTERVAL 10 YEAR ORDER BY date_of_birth");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function get12cat($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? AND date_of_birth BETWEEN CURDATE() - INTERVAL 12 YEAR + INTERVAL 1 DAY AND CURDATE()-INTERVAL 11 YEAR ORDER BY date_of_birth");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
+
+    public function getClub($sex)
+    {
+        $stmt = $this->prepare("SELECT * FROM members WHERE sex = ? ORDER BY club;");
+        $stmt->bind_param("s", $sex);
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $result = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+        $stmt->close();
+        return $result;
+    }
 }

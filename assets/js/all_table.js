@@ -1,11 +1,12 @@
 const table = document.getElementById('table');
-const pagebyId = document.getElementById('page');
-const pageCount = document.getElementById('page_count');
 
-function getMembers(page) {
-    request('control_panel/getmembers', {
-        ['page']: page
+document.querySelector('select').addEventListener('change', function (ev) {
+    table.innerHTML = "";
+
+    request('all_table/sorting', {
+        "sorting": ev.target.value,
     }, (response) => {
+
         const received = response;
         received.members.forEach(function (entry) {
             let element = document.createElement('tr');
@@ -20,22 +21,6 @@ function getMembers(page) {
             element.insertAdjacentHTML('beforeend', '<td>' + entry['sex'] + '</td>');
 
             table.insertAdjacentElement('beforeend', element);
-            pagebyId.innerText = received.page;
-            pageCount.innerText = received.pageCount;
         });
     });
-}
-
-
-function prev() {
-    table.innerHTML = "";
-    getMembers(parseInt(pagebyId.innerText) - 1);
-}
-
-function next() {
-    table.innerHTML = "";
-    getMembers(parseInt(pagebyId.innerText) + 1);
-}
-
-const c = getCookie('page');
-getMembers(c === undefined ? 1 : c);
+});

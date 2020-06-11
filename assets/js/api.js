@@ -7,6 +7,7 @@ function request(target, body, callback = {}, fallbackCallback = e => alert(e.is
         if (request.readyState === XMLHttpRequest.DONE) {
             if (request.status === 200) callback(request.response);
             else if (request.status === 403) alert("Нет прав доступа!");
+            else if (request.status === 204) {}
             else fallbackCallback(request.response);
         }
     };

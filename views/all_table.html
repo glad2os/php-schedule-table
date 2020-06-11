@@ -1,0 +1,49 @@
+<div class="jumbotron">
+    <h1>Выберите сортировку</h1>
+    <label>
+        <select name="category">
+            <option>Сортировка:</option>
+            <option value="clubM">По спортивному клубу М</option>
+            <option value="clubW">По спортивному клубу Ж</option>
+            <option disabled>----</option>
+            <option value="12M">12 категория М</option>
+            <option value="12W">12 категория Ж</option>
+            <option disabled>----</option>
+            <option value="11M">11 категория М</option>
+            <option value="11W">11 категория Ж</option>
+            <option disabled>----</option>
+            <option value="10M">10 категория М</option>
+            <option value="10W">10 категория Ж</option>
+            <option disabled>----</option>
+            <option value="9M">9 категория М</option>
+            <option value="9W">9 категория Ж</option>
+            <option disabled>----</option>
+            <option value="8M">8 категория М</option>
+            <option value="8W">8 категория Ж</option>
+            <option disabled>----</option>
+        </select>
+    </label>
+</div>
+<div class="container">
+    <div class="d-flex justify-content-around">
+        <div class="container" style="margin-top: 25px;">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Имя</th>
+                    <th scope="col">Фамилия</th>
+                    <th scope="col">Дата рождения</th>
+                    <th scope="col">Вес</th>
+                    <th scope="col">Спортивный клуб</th>
+                    <th scope="col">Город индекс</th>
+                    <th scope="col">Пол</th>
+                </tr>
+                </thead>
+                <tbody id="table"></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="/assets/js/all_table.js"></script>

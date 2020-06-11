@@ -25,7 +25,6 @@ function getMembers(page) {
             pageCount.innerText = received.pageCount;
         });
     });
-
 }
 
 function sendBtn(btn) {
