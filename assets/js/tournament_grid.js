@@ -1,13 +1,14 @@
 const url = window.location.pathname.split("/");
 const param = url[url.length - 1];
 
-const thead = document.getElementById('thead');
-const tbody = document.getElementById('tbody');
+const dTHead = document.getElementById('thead');
+const dTBody = document.getElementById('tbody');
+const dTBodyTimer = document.getElementById('tbodyTimer');
 
-let map = new Map();
+const map = new Map();
 
 function calc() {
-    let _map = new Map();
+    const _map = new Map();
     map.forEach((v, k) => {
         const score = Number.parseInt(k.innerText);
         if (isNaN(score)) return;
@@ -44,11 +45,11 @@ Element.prototype.calculate = function () {
     calc();
 }
 
-function generateTHeadElement(content = '') {
+Element.prototype.generateTHeadElement = function (content = '') {
     const element = document.createElement('th');
     element.setAttribute('scope', 'col');
     element.innerText = content;
-    thead.insertAdjacentElement('beforeend', element);
+    this.insertAdjacentElement('beforeend', element);
 }
 
 Element.prototype.generateTData1 = function (content = '') {
@@ -71,7 +72,54 @@ function generateTBodyElement(member, members) {
     element.generateTData1(member.surname);
     members.forEach(m => element.generateTData2(m !== member));
     map.set(element.generateTData1(), element.generateTData1());
-    tbody.insertAdjacentElement('beforeend', element);
+    dTBody.insertAdjacentElement('beforeend', element);
+}
+
+function start(timer) {
+    if (timer.data !== undefined) return;
+    if (!timer.paused) timer.innerText = 120;
+    timer.paused = false;
+    timer.data = setInterval(() => {
+        if (--timer.innerText === 0) {
+            clearInterval(timer.data);
+            timer.data = undefined;
+        }
+    }, 1000);
+}
+
+function pause(timer) {
+    timer.paused = true;
+    if (timer.data === undefined) return;
+    clearInterval(timer.data);
+    timer.data = undefined;
+}
+
+function stop(timer) {
+    timer.paused = false;
+    if (timer.data === undefined) return;
+    clearInterval(timer.data);
+    timer.data = undefined;
+}
+
+Element.prototype.generateControl = function(name, timer) {
+    const element = document.createElement('a');
+    element.innerText = name;
+    element.onclick = () => self[name](timer);
+    this.insertAdjacentElement('beforeend', element);
+    return element;
+};
+
+function generateTBodyTimerElement(member1, member2, fightId) {
+    const element = document.createElement('tr');
+    element.generateTData1(member1.surname);
+    element.generateTData1(member2.surname);
+    const tdTimer = element.generateTData1('120');
+    const tdControls = element.generateTData1();
+    tdControls.style.display = 'flex';
+    tdControls.generateControl('start', tdTimer).style.flex = 1;
+    tdControls.generateControl('pause', tdTimer).style.flex = 1;
+    tdControls.generateControl('stop', tdTimer).style.flex = 1;
+    dTBodyTimer.insertAdjacentElement('beforeend', element);
 }
 
 request('all_table/sorting', {
@@ -79,13 +127,17 @@ request('all_table/sorting', {
 }, (json) => {
     const members = json.members;
 
-    generateTHeadElement();
+    dTHead.generateTHeadElement();
 
-    members.forEach(member => {
-        generateTHeadElement(member.surname);
+    let fightId = 0;
+    members.forEach((member, index) => {
+        dTHead.generateTHeadElement(member.surname);
         generateTBodyElement(member, members);
+        for (let i = index + 1; i < members.length; i++) {
+            generateTBodyTimerElement(member, members[i], fightId++);
+        }
     });
 
-    generateTHeadElement();
-    generateTHeadElement();
+    dTHead.generateTHeadElement();
+    dTHead.generateTHeadElement();
 });
