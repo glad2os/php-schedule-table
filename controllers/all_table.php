@@ -17,7 +17,9 @@ class all_table extends Base
 
     public function action_index()
     {
-        View::viewPage('all_table.html');
+        View::viewPage('all_table.html',[
+            'title'=>"Все таблицы"
+        ]);
     }
 
     public function action_sorting()

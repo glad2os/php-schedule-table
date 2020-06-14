@@ -20,6 +20,7 @@ abstract class Base
     public function method_not_found()
     {
         View::viewPage('error_405.html');
+        die;
     }
 
     public function forbidden($message = null)

@@ -75,4 +75,14 @@ class ControlPanel extends Base
 
         $this->mysqli->deleteMember($id);
     }
+
+    function truncateMembers()
+    {
+        RequestedPermissions::Permission(PERMISSION_ADMIN);
+
+        if (!$this->mysqli->authByToken($_COOKIE['id'], $_COOKIE['token'])) throw new ForbiddenException();
+
+        $this->mysqli->truncateMembers();
+    }
+
 }

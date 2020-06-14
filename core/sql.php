@@ -328,4 +328,12 @@ class sql extends \MySQLi
         $stmt->close();
         return $result;
     }
+
+    public function truncateMembers()
+    {
+        $stmt = $this->prepare("TRUNCATE members");
+        $stmt->execute();
+        if ($stmt->errno != 0) throw new DbConnectionException($stmt->error, $stmt->errno);
+        $stmt->close();
+    }
 }

@@ -32,6 +32,7 @@ include_once __DIR__ . "/models/Index.php";
 include_once __DIR__ . "/models/ControlPanel.php";
 include_once __DIR__ . "/models/AllTable.php";
 include_once __DIR__ . "/models/MainTable.php";
+include_once __DIR__ . "/models/Competition.php";
 
 /*
  * Все контроллеры

@@ -41,25 +41,32 @@ class control_panel extends Base
     {
         header('Content-Type: application/json');
         $request = json_decode(file_get_contents("php://input"), true);
+        try {
 
-        if (!isset($request['page'])) {
+            if (!isset($request['page'])) {
+                http_response_code(400);
+                die;
+            }
+
+            $members = $this->model->getAllMembers($request['page'] - 1);
+
+            if (sizeof($members) == 0) {
+                http_response_code(204);
+                exit();
+            }
+
+            print json_encode([
+                'page' => $request['page'],
+                'members' => $members,
+                'pageCount' => ceil($this->model->getCountOfMembers() / 10),
+            ]);
+        } catch (\Throwable $exception) {
             http_response_code(400);
-            die;
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
         }
-
-        $members = $this->model->getAllMembers($request['page'] - 1);
-
-
-        if (sizeof($members) == 0) {
-            http_response_code(204);
-            exit();
-        }
-
-        print json_encode([
-            'page' => $request['page'],
-            'members' => $members,
-            'pageCount' => ceil($this->model->getCountOfMembers() / 10),
-        ]);
     }
 
     function action_addmember()
@@ -133,4 +140,27 @@ class control_panel extends Base
             ]);
         }
     }
+
+    function action_truncate()
+    {
+        header('Content-Type: application/json');
+
+        try {
+            $this->model->truncateMembers();
+            http_response_code(200);
+        } catch (ForbiddenException $exception) {
+            http_response_code(403);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        } catch (\Throwable $exception) {
+            http_response_code(400);
+            print json_encode([
+                'issueType' => substr(strrchr(get_class($exception), "\\"), 1),
+                'issueMessage' => $exception->getMessage(),
+            ]);
+        }
+    }
+
 }
