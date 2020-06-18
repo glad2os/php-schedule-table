@@ -18,7 +18,8 @@ class all_table extends Base
     public function action_index()
     {
         View::viewPage('all_table.html',[
-            'title'=>"Все таблицы"
+            'title'=>"Все таблицы",
+            'css' => 'main_table'
         ]);
     }
 

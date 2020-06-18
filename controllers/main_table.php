@@ -20,7 +20,8 @@ class main_table extends Base
     function action_index()
     {
         View::viewPage('main_table.html',[
-            'title'=>"Общая таблица"
+            'title'=>"Общая таблица",
+            'css' => 'main_table'
         ]);
     }
 

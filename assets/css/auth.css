@@ -1,0 +1,40 @@
+body {
+    background: url("/assets/img/bg_index.png");
+    background-size: cover;
+}
+
+#user {
+    color: white;
+}
+
+h1 {
+    color: white;
+}
+
+.menu {
+    text-align: center;
+    font-size: 1.5em;
+    margin-top: 150px;
+    margin-left: 90px;
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+}
+
+.button {
+    border: 3px solid white;
+    margin-top: 20px;
+    padding: 15px;
+    color: white;
+    margin-bottom: 15px;
+}
+
+.button:hover {
+    color: #e7cccc;
+    border: 3px solid #e5d4d4;
+}
+
+a:hover {
+    color: #000 !important;
+    text-decoration: none
+}

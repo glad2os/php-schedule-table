@@ -23,7 +23,8 @@ class control_panel extends Base
             $this->model->checkGuest();
 
             View::viewPage('control_panel.html', [
-                'title' => "Контрольная панель"
+                'title' => "Контрольная панель",
+                'css' => 'main_table'
             ]);
         } catch (ForbiddenException $exception) {
             $this->forbidden($exception->getMessage());

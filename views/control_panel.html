@@ -1,5 +1,10 @@
 <div class="jumbotron">
-    <form>
+    <a href="/">
+        <img src="/assets/img/arrow_black.png" width="170" height="177">
+    </a>
+    <h1 class="d-flex justify-content-center">Контрольная панель</h1>
+    <p>Добавить участника</p>
+    <form style="margin-bottom: 35px">
         <div class="row" style="margin-bottom: 15px;">
             <div class="col">
                 <input type="text" name="name" class="form-control" placeholder="Имя">
@@ -28,18 +33,22 @@
             <div class="col">
                 <label>
                     <select name="sex">
-                        <option>m</option>
-                        <option>w</option>
+                        <option>man</option>
+                        <option>woman</option>
                     </select>
                 </label>
             </div>
         </div>
         <button type="button" class="btn btn-info" onclick="addUser(this.form)">Добавить</button>
     </form>
+
+    <a href="/competition">
+        <h3>Перейти в соревнования</h3>
+    </a>
 </div>
 
 <div class="container">
-    <table class="table">
+    <table class="table table-striped">
         <thead>
         <tr>
             <th scope="col">#</th>

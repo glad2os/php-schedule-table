@@ -6,6 +6,7 @@ namespace Controller;
 
 use Exception\ForbiddenException;
 use Helper\View;
+use http\Header;
 
 class logout extends Base
 {
@@ -17,14 +18,12 @@ class logout extends Base
     function action_index()
     {
         if (!(isset($_COOKIE['id']) && isset($_COOKIE['token']) && $this->model->authByToken())) {
-            $this->method_not_found();
+            header("Location: /auth");
         } else {
             $this->model->logout();
             http_response_code(200);
 
-            View::viewPage('index.html',[
-                'title'=>"Главная страница"
-            ]);
+            header("Location: /");
         }
     }
 }

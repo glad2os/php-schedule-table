@@ -9,7 +9,8 @@ class index extends Base
     function action_index()
     {
         View::viewPage('index.html',[
-            'title'=>"Главная страница"
+            'title'=>"Главная страница",
+            'css' => "index"
         ]);
     }
 }

@@ -26,7 +26,8 @@ abstract class Base
     public function forbidden($message = null)
     {
         View::viewPage('403.html', [
-            'exception' => $message
+            'exception' => $message,
+            'title' => "Доступ запрещен"
         ]);
     }
 }

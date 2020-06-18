@@ -101,10 +101,12 @@ function stop(timer) {
     timer.data = undefined;
 }
 
-Element.prototype.generateControl = function(name, timer) {
+Element.prototype.generateControl = function (name, timer, task) {
     const element = document.createElement('a');
-    element.innerText = name;
-    element.onclick = () => self[name](timer);
+    element.innerHTML = name;
+    element.setAttribute("task", task);
+    console.log(self);
+    element.onclick = () => self[task](timer);
     this.insertAdjacentElement('beforeend', element);
     return element;
 };
@@ -116,9 +118,9 @@ function generateTBodyTimerElement(member1, member2, fightId) {
     const tdTimer = element.generateTData1('120');
     const tdControls = element.generateTData1();
     tdControls.style.display = 'flex';
-    tdControls.generateControl('start', tdTimer).style.flex = 1;
-    tdControls.generateControl('pause', tdTimer).style.flex = 1;
-    tdControls.generateControl('stop', tdTimer).style.flex = 1;
+    tdControls.generateControl('Старт', tdTimer, "start").style.flex = 1;
+    tdControls.generateControl('<img src="/assets/img/pause.png" width="40" height="33.6">', tdTimer, "pause").style.flex = 1;
+    tdControls.generateControl('<img src="/assets/img/play.png" width="40" height="33.6">', tdTimer, "stop").style.flex = 1;
     dTBodyTimer.insertAdjacentElement('beforeend', element);
 }
 

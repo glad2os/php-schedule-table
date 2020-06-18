@@ -16,6 +16,10 @@ class auth extends Base
 
     function action_index($get = null)
     {
+        View::viewPage("auth.html",[
+            'title' => "Авторизация",
+            'css' => "auth"
+        ]);
     }
 
     function action_register()

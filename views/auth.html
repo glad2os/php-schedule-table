@@ -1,6 +1,8 @@
 <div class="menu">
+    <h1 id="user"></h1>
+
     <form id="auth">
-        <h1>Регистрация</h1>
+        <h1>Авторизация</h1>
         <div class="form-group">
             <input type="text" placeholder="Логин" name="login" class="form-control" id="exampleInputEmail1"
                    aria-describedby="emailHelp">
@@ -8,6 +10,8 @@
         <div class="form-group">
             <input type="password" placeholder="Пароль" name="password" class="form-control" id="exampleInputPassword1">
         </div>
-        <div type="button" class="button" form="auth" onclick="reg(this.ownerDocument.forms[0])">Регистрация</div>
+        <div type="button" class="button" form="auth" onclick="log(this.ownerDocument.forms[0])">Войти</div>
     </form>
 </div>
+
+<script src="/assets/js/auth_loader.js"></script>
